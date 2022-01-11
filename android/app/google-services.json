@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "624219046831",
+    "project_id": "selda-29276",
+    "storage_bucket": "selda-29276.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624219046831:android:195817f4b8c6ee12c1255a",
+        "android_client_info": {
+          "package_name": "com.example.selda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624219046831-jckk9uodks5lm1q66fhmjt3bbfmo10b8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.selda",
+            "certificate_hash": "b814eede59de96831058893725ba8643c7870901"
+          }
+        },
+        {
+          "client_id": "624219046831-uvm2jee4hri32ldf4dbdh2q4demsjubd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARm-a_SRSzjYW1e7urwywzoeb24zugZtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624219046831-uvm2jee4hri32ldf4dbdh2q4demsjubd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
