@@ -11,7 +11,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:selda/and/and_main.dart';
 
-import 'GoogleAuthClient.dart';
+import 'google_auth_client.dart';
 
 
 class ImgScreen extends StatefulWidget {
@@ -41,10 +41,12 @@ class _ImgScreenState extends State<ImgScreen> {
   Future<void> _loadImage() async {
     _image = widget.args[0];
 
+    ///builds output path for image compressor
     final lastIndex = _image.path.lastIndexOf(new RegExp(r'.jp'));
     final splitted = _image.path.substring(0, lastIndex);
     final outPath = "${splitted}_out${_image.path.substring(lastIndex)}";
 
+    ///image compress
     _image = (await FlutterImageCompress.compressAndGetFile(_image.path.toString(), outPath, quality: 50))!;
 
     Future.delayed(Duration(seconds: 0)).whenComplete(() => setState(() {
@@ -65,13 +67,16 @@ class _ImgScreenState extends State<ImgScreen> {
     late String folderId;
 
 
+    ///tries to find App folder in Google Drive
     try {
       await driveApi.files.list(q: "name = 'SeldaUploads'").then((folder) {
 
         folderId = folder.files!.first.id!;
 
       });
-    } catch (e) {
+    }
+    ///creates App folder
+    catch (e) {
 
       await driveApi.files.create(
           drive.File(
@@ -83,15 +88,19 @@ class _ImgScreenState extends State<ImgScreen> {
     }
 
 
+    ///creates new upload file + content
     var media = new drive.Media(_image.openRead(), _image.lengthSync());
     var driveFile = new drive.File();
 
+    ///names upload file and specifies parent folder
     driveFile.name = DateTime.now().toString();
     driveFile.parents = [folderId ];
 
+    ///uploads file
     final result = await driveApi.files.create(driveFile, uploadMedia: media);
     print("Upload result: $result");
 
+    ///returns to welcome screen
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -117,10 +126,16 @@ class _ImgScreenState extends State<ImgScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Work'),
+        title: Text('Dein Bild'),
       ),
       body: _loading
-        ? _loadingScreen(context)
+
+      ///if loading, show loading screen
+        ? Center(
+          child : CircularProgressIndicator()
+      )
+
+      ///else show taken picture
         : SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -134,22 +149,6 @@ class _ImgScreenState extends State<ImgScreen> {
         },
         child: Icon(Icons.upload),
       ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-
-  Widget _loadingScreen(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.white,
-      child: Center(
-        child: CircularProgressIndicator(
-          strokeWidth: 6,
-          backgroundColor: Colors.blue[300],
-          valueColor:
-          new AlwaysStoppedAnimation<Color>(Colors.blue[900]!),
-        ),
-      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:googleapis_auth/auth_io.dart';
 
+///saves path to last downloaded image
 class PathStorage {
   final storage = FlutterSecureStorage();
 

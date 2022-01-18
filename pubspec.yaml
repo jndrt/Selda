@@ -43,6 +43,7 @@ dependencies:
   url_launcher: ^6.0.17
   path_provider: ^2.0.8
   google_fonts: ^2.2.0
+  bulleted_list: ^0.0.1+0.1a
 
 
 dev_dependencies:

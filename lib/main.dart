@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:selda/windows/win_main.dart';
+import 'package:selda/win/win_main.dart';
 
 import 'and/and_main.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:googleapis_auth/auth_io.dart';
 
+///saves login credentials for Google
 class SecureStorage {
   final storage = FlutterSecureStorage();
   

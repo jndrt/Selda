@@ -1,5 +1,7 @@
 import 'package:http/http.dart' as http;
 
+
+///returns Google client
 class GoogleAuthClient extends http.BaseClient {
   final Map<String, String> _headers;
 
