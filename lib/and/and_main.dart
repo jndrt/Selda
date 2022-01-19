@@ -104,14 +104,21 @@ class _AndMainState extends State<AndMain> {
                 ],
               ),
               RichText(
-                  text : TextSpan(
-                      text: '\nDamit die Kantenerkennung möglichst gut funktioniert, benutze bitte einen dunklen Hintergrund!',
+                text : TextSpan(
+                  children: [
+                    TextSpan(
+                      text: '\nDamit die Kantenerkennung möglichst gut funktioniert, benutze bitte einen dunklen Hintergrund!'
+                          '\n'
+                          '\nEs wird jeweils nur ein Bild auf Google Drive gespeichert, um ein Bild erneut zu senden drücke ',
                       style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold
+                        fontSize: 20,
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
                       ),
-                  ),
+                    ),
+                    WidgetSpan(child: Icon(Icons.photo)),
+                  ]
+                ),
                 textAlign: TextAlign.center,
               )
             ],

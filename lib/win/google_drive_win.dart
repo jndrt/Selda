@@ -124,7 +124,7 @@ class GoogleDrive {
       final essentials = dateTime.substring(0, lastIndex).replaceAll(':', '-');
 
       ///sets saving path
-      _imgPath = dir!.path + "\\$essentials";
+      _imgPath = dir!.path + "\\$essentials.jpg";
 
       ///downloads image
       drive.Media img = (await driveApi.files.get(lastEntryDriveId, downloadOptions: drive.DownloadOptions.fullMedia)) as drive.Media;
@@ -151,7 +151,7 @@ class GoogleDrive {
       await driveApi.files.delete(lastEntryDriveId);
     }
 
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(milliseconds: 500));
 
     return _imgPath;
   }

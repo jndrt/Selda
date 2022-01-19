@@ -46,7 +46,7 @@ class _ImgScreenState extends State<ImgScreen> {
     final outPath = "${splitted}_out${_image.path.substring(lastIndex)}";
 
     ///image compress
-    _image = (await FlutterImageCompress.compressAndGetFile(_image.path.toString(), outPath, quality: 50))!;
+    _image = (await FlutterImageCompress.compressAndGetFile(_image.path.toString(), outPath, quality: 30))!;
 
     Future.delayed(Duration(seconds: 0)).whenComplete(() => setState(() {
       _loading = false;
@@ -68,10 +68,22 @@ class _ImgScreenState extends State<ImgScreen> {
 
     ///tries to find App folder in Google Drive
     try {
-      await driveApi.files.list(q: "name = 'SeldaUploads'").then((folder) {
+      await driveApi.files.list(q: "name = 'SeldaUploads'").then((folder) async {
 
         folderId = folder.files!.first.id!;
 
+        ///deletes previously sent images
+        await driveApi.files.list(q: "'$folderId' in parents").then((files) async {
+
+          if (files.files!.isNotEmpty){
+
+            files.files!.forEach((element) async {
+
+              await driveApi.files.delete(element.id!);
+
+            });
+          }
+        });
       });
     }
     ///creates App folder
@@ -102,7 +114,7 @@ class _ImgScreenState extends State<ImgScreen> {
     ///returns to welcome screen
     Navigator.popUntil(context, (Route<dynamic> predicate) => predicate.isFirst);
 
-    showMessage("Success", "Image has been saved and uploaded to Goolge Drive");
+    showMessage("200", "Bild wurde erfolgreich gespeichert und hochgeladen");
   }
 
   showMessage(String title, String message){
