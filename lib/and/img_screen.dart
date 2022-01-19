@@ -9,7 +9,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 import 'package:googleapis/drive/v3.dart' as drive;
-import 'package:selda/and/and_main.dart';
 
 import 'google_auth_client.dart';
 
@@ -101,13 +100,7 @@ class _ImgScreenState extends State<ImgScreen> {
     print("Upload result: $result");
 
     ///returns to welcome screen
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                AndMain(title: 'Selda',)
-        )
-    );
+    Navigator.popUntil(context, (Route<dynamic> predicate) => predicate.isFirst);
 
     showMessage("Success", "Image has been saved and uploaded to Goolge Drive");
   }

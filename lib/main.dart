@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.fahkwangTextTheme(),
       ),
       home: Platform.isWindows ? WinMain(title: 'Selda')
-          : AndMain(title: 'Selda')
+          : AndMain(title: 'Selda', init: true)
     );
   }
 }

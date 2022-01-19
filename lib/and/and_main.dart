@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bulleted_list/bulleted_list.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'img_screen.dart';
 import 'package:edge_detection/edge_detection.dart';
@@ -11,8 +12,9 @@ import 'package:google_sign_in/google_sign_in.dart' as signInService;
 
 
 class AndMain extends StatefulWidget {
-  AndMain({Key? key, required this.title}) : super(key: key);
+  AndMain({Key? key, required this.title, required this.init}) : super(key: key);
 
+  final bool init;
   final String title;
 
   @override
@@ -24,10 +26,21 @@ class _AndMainState extends State<AndMain> {
   late signInService.GoogleSignInAccount _account;
 
 
+
+  @override
+  void initState() {
+
+    if(widget.init) signIn();
+
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: [openGallery()],
 
           title: Text(widget.title),
         ),
@@ -108,7 +121,6 @@ class _AndMainState extends State<AndMain> {
         ///button to take picture
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await signIn();
             await _openCamera();
           },
           tooltip: 'Take Picture',
@@ -153,5 +165,28 @@ class _AndMainState extends State<AndMain> {
           )
       );
     }
+  }
+
+  Widget openGallery() {
+    return IconButton(
+        onPressed: () async {
+          var file = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+          _imgPath = file!.path;
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ImgScreen(
+                        args: [
+                          File(_imgPath!),
+                          _account
+                        ],
+                      )
+              )
+          );
+        },
+        icon: Icon(Icons.photo));
   }
 }
