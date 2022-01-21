@@ -4,6 +4,8 @@ A new Flutter project.
 
 ## Getting Started
 
+### Connect a phone to Android Studio
+
 Open "Selda" with Android Studio
 
 **Option 1**: Connect phone to PC via USB
@@ -24,8 +26,10 @@ click *Create Virtual Device*
 
 Create Pixel 4a with Android 11 (other options can be chosen)
 
-
+### Connect Window to Android Studio
 
 execute **$ flutter config --enable-windows-desktop**
+
+### Run Selda
 
 run on Windows- Desktop and either mobile Phone (Android only) or emulator
