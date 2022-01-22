@@ -37,8 +37,8 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
             if (snap.hasData &&
                 (snap.data != 'noFolder' &&
                 snap.data != 'noImage' &&
-                snap.connectionState == ConnectionState.done ||
-                snap.data == 'noFolder' &&
+                snap.connectionState == ConnectionState.done) ||
+                (snap.data == 'noFolder' &&
                 imgPath != '')) {
 
               if (snap.data != 'noFolder') {
