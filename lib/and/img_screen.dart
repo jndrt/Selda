@@ -26,18 +26,19 @@ class _ImgScreenState extends State<ImgScreen> {
   late File _image;
   late GoogleSignInAccount _account;
 
-  late bool _loading;
-  
+
   @override
   void initState(){
     super.initState();
-    _loading = true;
-    _loadImage();
 
     _account = widget.args[1];
+
+    _compress();
+    _save();
+    _upload();
   }
   
-  Future<void> _loadImage() async {
+  Future<void> _compress() async {
     _image = widget.args[0];
 
     ///builds output path for image compressor
@@ -48,9 +49,6 @@ class _ImgScreenState extends State<ImgScreen> {
     ///image compress
     _image = (await FlutterImageCompress.compressAndGetFile(_image.path.toString(), outPath, quality: 30))!;
 
-    Future.delayed(Duration(seconds: 0)).whenComplete(() => setState(() {
-      _loading = false;
-    }));
   }
 
   _save() async {
@@ -133,27 +131,18 @@ class _ImgScreenState extends State<ImgScreen> {
       appBar: AppBar(
         title: Text('Dein Bild'),
       ),
-      body: _loading
-
-      ///if loading, show loading screen
-        ? Center(
-          child : CircularProgressIndicator()
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Dein Bild wird hochgeladen...',
+           style: TextStyle(
+             fontSize: 24,
+              color: Colors.black,
+            ),
+          ),
+        ])
       )
-
-      ///else show taken picture
-        : SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Image.file(_image),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Upload to Drive',
-        onPressed: () async {
-          await _save();
-          await _upload();
-        },
-        child: Icon(Icons.upload),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
