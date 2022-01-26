@@ -35,6 +35,7 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
 
             ///Image is fetched from Goolge Drive
             if (snap.hasData &&
+                snap.data!.length > 0 &&
                 snap.data != 'noFolder' &&
                 snap.data != 'noImage' &&
                 snap.connectionState == ConnectionState.done) {
@@ -42,7 +43,9 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
               imgPath = snap.data!;
               pathStorage.savePath(imgPath);
 
-              final name = imgPath.substring(imgPath.length - 23, imgPath.length - 4);
+              final nameBegin = imgPath.lastIndexOf(new RegExp(r'\\')) + 1;
+
+              final name = imgPath.substring(nameBegin, imgPath.length - 4);
 
               return Stack(
                   children : [

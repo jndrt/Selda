@@ -43,6 +43,7 @@ dependencies:
   google_fonts: ^2.2.0
   bulleted_list: ^0.0.1+0.1a
   image_picker: ^0.8.4+4
+  faker: ^2.0.0
 
 
 dev_dependencies:
