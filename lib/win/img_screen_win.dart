@@ -31,23 +31,18 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
       body: FutureBuilder(
           future: getImg(),
           builder: (BuildContext context, AsyncSnapshot<String> snap) {
-            print(snap.data);
+            print('${snap.data} before');
 
             ///Image is fetched from Goolge Drive
             if (snap.hasData &&
-                (snap.data != 'noFolder' &&
+                snap.data != 'noFolder' &&
                 snap.data != 'noImage' &&
-                snap.connectionState == ConnectionState.done) ||
-                (snap.data == 'noFolder' &&
-                imgPath != '')) {
+                snap.connectionState == ConnectionState.done) {
 
-              if (snap.data != 'noFolder') {
-                imgPath = snap.data!;
-                pathStorage.savePath(imgPath);
-              }
+              imgPath = snap.data!;
+              pathStorage.savePath(imgPath);
 
               final name = imgPath.substring(imgPath.length - 23, imgPath.length - 4);
-              print('${snap.data} loaded');
 
               return Stack(
                   children : [
@@ -98,9 +93,14 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
                 snap.connectionState == ConnectionState.done &&
                 snap.data == 'noImage'){
 
-              print(snap.data);
+              print('$imgPath without online');
 
-              final name = imgPath.substring(imgPath.length - 23, imgPath.length - 4);
+              var name = imgPath;
+
+              if (imgPath.length >= 23) {
+                name = imgPath.substring(
+                    imgPath.length - 23, imgPath.length - 4);
+              }
 
               return Stack(
                   children : [
@@ -147,8 +147,7 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
             ///user hasn't uploaded anything yet
             else if (snap.hasData &&
                 snap.connectionState == ConnectionState.done &&
-                snap.data == 'noFolder' &&
-                imgPath == ''){
+                snap.data == 'noFolder'){
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -199,10 +198,12 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
    * if no new image is available on Google Drive
    * this loads path to last downloaded image
    */
-  Future<void> setImagePath() async {
+  Future<bool> setImagePath() async {
     await pathStorage.getPath().then((path) {
       imgPath = path!['path'];
     });
+
+    return true;
   }
 
   /**
@@ -222,8 +223,6 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
    */
   Future<String> getImg() async {
     await setImagePath();
-
-    print(imgPath);
 
     return await googleDrive.receive();
   }
