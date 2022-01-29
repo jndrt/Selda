@@ -40,6 +40,8 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
                 snap.data != 'noImage' &&
                 snap.connectionState == ConnectionState.done) {
 
+              print(snap.data);
+
               imgPath = snap.data!;
               pathStorage.savePath(imgPath);
 
@@ -98,12 +100,9 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
 
               print('$imgPath without online');
 
-              var name = imgPath;
+              final nameBegin = imgPath.lastIndexOf(new RegExp(r'\\')) + 1;
 
-              if (imgPath.length >= 23) {
-                name = imgPath.substring(
-                    imgPath.length - 23, imgPath.length - 4);
-              }
+              final name = imgPath.substring(nameBegin, imgPath.length - 4);
 
               return Stack(
                   children : [
