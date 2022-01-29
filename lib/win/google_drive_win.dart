@@ -20,6 +20,10 @@ class GoogleDrive {
 
   String _imgPath = '';
 
+  clean(){
+    _storage.clear();
+  }
+
   ///provides Credentials for Goolge login
   Future<http.Client> getHttpClient() async {
     var credentials = await _storage.getCredentials();
@@ -107,6 +111,8 @@ class GoogleDrive {
     }
     ///AccessToken expired -> refresh
     catch (e){
+
+      print(e);
 
       getNewCredentials();
       receive();

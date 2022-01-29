@@ -2,6 +2,8 @@ import 'package:bulleted_list/bulleted_list.dart';
 import 'package:flutter/material.dart';
 import 'package:selda/win/img_screen_win.dart';
 
+import 'google_drive_win.dart';
+
 
 class WinMain extends StatefulWidget {
   WinMain({Key? key, required this.title}) : super(key: key);
@@ -13,6 +15,8 @@ class WinMain extends StatefulWidget {
 }
 
 class _WinMainState extends State<WinMain> {
+
+  GoogleDrive googleDrive = GoogleDrive();
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +120,13 @@ class _WinMainState extends State<WinMain> {
    * refreshes page
    * gets called by button
    */
-  void refresh(){
+  Future<void> refresh() async {
+
+    //await googleDrive.clean();
+
+    await googleDrive.getHttpClient();
+
+
     Navigator.push(
         context,
         MaterialPageRoute(

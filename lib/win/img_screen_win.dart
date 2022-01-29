@@ -201,8 +201,15 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
    * this loads path to last downloaded image
    */
   Future<bool> setImagePath() async {
+    print('one');
+
     await pathStorage.getPath().then((path) {
-      imgPath = path!['path'];
+      print(path);
+
+      try {
+        imgPath = path!['path'];
+      }
+      catch (e){}
     });
 
     return true;
@@ -225,6 +232,8 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
    */
   Future<String> getImg() async {
     await setImagePath();
+
+    print('hello');
 
     return await googleDrive.receive();
   }
