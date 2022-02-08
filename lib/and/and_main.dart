@@ -137,7 +137,7 @@ class _AndMainState extends State<AndMain> {
                 text : TextSpan(
                   children: [
                     TextSpan(
-                      text: '\nDamit die Kantenerkennung möglichst gut funktioniert, wird empfohlen, einen möglichst dunklen Hintergrund zu buntzen.'
+                      text: '\nDamit die Kantenerkennung möglichst gut funktioniert, wird empfohlen, einen möglichst dunklen Hintergrund zu benutzen.'
                           '\n'
                           '\nEs wird jeweils nur ein Bild auf Google Drive gespeichert, um ein Bild erneut zu senden drücke ',
                       style: TextStyle(
