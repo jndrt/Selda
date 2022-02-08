@@ -124,18 +124,18 @@ class GoogleDrive {
 
       final dir = await getDownloadsDirectory();
 
-      //final dateTime = DateTime.now().toString();
+      final dateTime = DateTime.now().toString();
 
       ///formats dateTime to make it suitable for saving
-      //final lastIndex = dateTime.indexOf('.');
-      //final essentials = dateTime.substring(0, lastIndex).replaceAll(':', '-');
+      final lastIndex = dateTime.indexOf('.');
+      final essentials = dateTime.substring(0, lastIndex).replaceAll(':', '-');
 
-      var faker = Faker();
+      //var faker = Faker();
 
-      final essentials = faker.person;
+      //final essentials = faker.person;
 
       ///sets saving path
-      _imgPath = dir!.path + "\\${essentials.firstName()} ${essentials.lastName()}.jpg";
+      _imgPath = dir!.path + "\\$essentials.jpg";
 
       ///downloads image
       drive.Media img = (await driveApi.files.get(lastEntryDriveId, downloadOptions: drive.DownloadOptions.fullMedia)) as drive.Media;

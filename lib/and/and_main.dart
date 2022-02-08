@@ -94,6 +94,36 @@ class _AndMainState extends State<AndMain> {
                         color: Colors.black
                     ),
                   ),
+                  RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Drücke ',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black
+                            ),
+                          ),
+                          WidgetSpan(child: Icon(Icons.crop)),
+                          TextSpan(
+                            text: ' oben ',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.black
+                            )
+                          ),
+                          TextSpan(
+                              text: ' rechts um dein Bild zuzuschneiden',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              )
+                          ),
+                        ]
+
+                      )
+                  ),
                   Text(
                     'Lade dein Bild zu Google Drive hoch',
                     style: TextStyle(
@@ -107,7 +137,7 @@ class _AndMainState extends State<AndMain> {
                 text : TextSpan(
                   children: [
                     TextSpan(
-                      text: '\nDamit die Kantenerkennung möglichst gut funktioniert, benutze bitte einen dunklen Hintergrund!'
+                      text: '\nDamit die Kantenerkennung möglichst gut funktioniert, wird empfohlen, einen möglichst dunklen Hintergrund zu buntzen.'
                           '\n'
                           '\nEs wird jeweils nur ein Bild auf Google Drive gespeichert, um ein Bild erneut zu senden drücke ',
                       style: TextStyle(
@@ -141,8 +171,9 @@ class _AndMainState extends State<AndMain> {
     final googleSignIn = signInService.GoogleSignIn.standard(
         scopes: [
           drive.DriveApi.driveScope,
-          drive.DriveApi.driveReadonlyScope]
+          ]
     );
+
     _account = (await googleSignIn.signIn())!;
   }
 
