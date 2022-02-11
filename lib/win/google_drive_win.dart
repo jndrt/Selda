@@ -24,7 +24,7 @@ class GoogleDrive {
     _storage.clear();
   }
 
-  ///provides Credentials for Goolge login
+  ///provides Credentials for Google login
   Future<http.Client> getHttpClient() async {
     var credentials = await _storage.getCredentials();
 

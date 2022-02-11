@@ -33,8 +33,6 @@ class _ImgScreenState extends State<ImgScreen> {
 
     _account = widget.args[1];
 
-    _compress();
-    _save();
     _upload();
   }
   
@@ -47,7 +45,7 @@ class _ImgScreenState extends State<ImgScreen> {
     final outPath = "${splitted}_out${_image.path.substring(lastIndex)}";
 
     ///image compress
-    _image = (await FlutterImageCompress.compressAndGetFile(_image.path.toString(), outPath, quality: 30))!;
+    _image = (await FlutterImageCompress.compressAndGetFile(_image.path.toString(), outPath, quality: 100))!;
 
   }
 
@@ -58,6 +56,9 @@ class _ImgScreenState extends State<ImgScreen> {
   }
 
   Future<void> _upload() async {
+    await _compress();
+    await _save();
+
     final authHeaders = await _account.authHeaders;
     final authenticateClient = GoogleAuthClient(authHeaders);
     final driveApi = drive.DriveApi(authenticateClient);

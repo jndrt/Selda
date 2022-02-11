@@ -84,7 +84,7 @@ class _AndMainState extends State<AndMain> {
                     'Richte die Kamera so aus, dass die Kanten des Blattes erkannt werden',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.black
+                      color: Colors.black,
                     ),
                   ),
                   Text(
@@ -95,6 +95,7 @@ class _AndMainState extends State<AndMain> {
                     ),
                   ),
                   RichText(
+
                       text: TextSpan(
                         children: [
                           TextSpan(

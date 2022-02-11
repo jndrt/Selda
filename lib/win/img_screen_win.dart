@@ -201,7 +201,6 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
    * this loads path to last downloaded image
    */
   Future<bool> setImagePath() async {
-    print('one');
 
     await pathStorage.getPath().then((path) {
       print(path);
