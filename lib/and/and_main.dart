@@ -156,7 +156,7 @@ class _AndMainState extends State<AndMain> {
           ),
         ),
 
-        ///button to take picture
+        ///button to open camera
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             await _openCamera();
@@ -167,7 +167,7 @@ class _AndMainState extends State<AndMain> {
     );
   }
 
-
+  ///gets called when app is opened
   Future<void> signIn() async {
     final googleSignIn = signInService.GoogleSignIn.standard(
         scopes: [
@@ -190,6 +190,8 @@ class _AndMainState extends State<AndMain> {
     });
 
     ///forwards user to image screen
+    ///with account information and image file
+    ///doesn't need to be confirmed again => instantSend
     if (_imgPath != null) {
       Navigator.push(
           context,
@@ -209,10 +211,13 @@ class _AndMainState extends State<AndMain> {
   Widget openGallery() {
     return IconButton(
         onPressed: () async {
+
+          ///opens Gallery
           var file = await ImagePicker().pickImage(source: ImageSource.gallery);
 
           _imgPath = file!.path;
 
+          ///Image has to be opened and confirmed before sending => instantSend false
           Navigator.push(
               context,
               MaterialPageRoute(

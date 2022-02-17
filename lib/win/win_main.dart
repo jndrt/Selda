@@ -109,18 +109,16 @@ class _WinMainState extends State<WinMain> {
 
         ///button to check Google Drive
         floatingActionButton: FloatingActionButton(
-          onPressed: refresh,
+          onPressed: checkDrive,
           tooltip: 'Letztes Bild anzeigen',
           child: const Icon(Icons.image_outlined),
         ),
     );
   }
 
-  /**
-   * refreshes page
-   * gets called by button
-   */
-  Future<void> refresh() async {
+  ///forwards to image screen
+  ///there drive is checked
+  Future<void> checkDrive() async {
 
     //await googleDrive.clean();
 

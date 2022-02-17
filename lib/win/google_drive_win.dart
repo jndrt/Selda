@@ -26,9 +26,10 @@ class GoogleDrive {
 
   ///provides Credentials for Google login
   Future<http.Client> getHttpClient() async {
+    ///fetches credentials from storage
     var credentials = await _storage.getCredentials();
 
-    ///login to Google
+    ///if no credentials are stored login to Google
     if (credentials == null) {
       var authClient = await clientViaUserConsent(
           ClientId(clientId, clientSecret), scopes, (url) {
@@ -40,7 +41,7 @@ class GoogleDrive {
       return authClient;
     }
 
-    ///fetches credentials from storage
+    ///else returns credentials from storage
     return authenticatedClient(http.Client(), AccessCredentials(
         AccessToken(credentials['type'], credentials['data'], DateTime.parse(credentials['expiry'])),
         credentials['refreshToken'],
@@ -100,7 +101,7 @@ class GoogleDrive {
 
             }
 
-            ///fetches image id
+            ///else fetches image id
             else {
 
               lastEntryDriveId = file.files!.first.id!;
@@ -113,8 +114,6 @@ class GoogleDrive {
     }
     ///AccessToken expired -> refresh
     catch (e){
-
-      print(e);
 
       getNewCredentials();
       receive();

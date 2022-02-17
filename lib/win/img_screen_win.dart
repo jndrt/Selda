@@ -40,11 +40,12 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
                 snap.data != 'noImage' &&
                 snap.connectionState == ConnectionState.done) {
 
-              print(snap.data);
-
+              ///path to new image
+              ///gets stored
               imgPath = snap.data!;
               pathStorage.savePath(imgPath);
 
+              ///extricate name of image for display
               final nameBegin = imgPath.lastIndexOf(new RegExp(r'\\')) + 1;
 
               final name = imgPath.substring(nameBegin, imgPath.length - 4);
@@ -90,16 +91,13 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
               );
             }
 
-            /**
-             * no new upload on Goolge Drive
-             * image is fetched from Downloads folder
-             */
+             ///no new upload on Goolge Drive
+             ///image is fetched from Downloads folder
             else if (snap.hasData &&
                 snap.connectionState == ConnectionState.done &&
                 snap.data == 'noImage'){
 
-              print('$imgPath without online');
-
+              ///extricate name to display
               final nameBegin = imgPath.lastIndexOf(new RegExp(r'\\')) + 1;
 
               final name = imgPath.substring(nameBegin, imgPath.length - 4);
@@ -196,14 +194,12 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
     );
   }
 
-  /**
-   * if no new image is available on Google Drive
-   * this loads path to last downloaded image
-   */
+  ///if no new image is available on Google Drive
+  ///this loads path to last downloaded image
+
   Future<bool> setImagePath() async {
 
     await pathStorage.getPath().then((path) {
-      print(path);
 
       try {
         imgPath = path!['path'];
@@ -214,10 +210,8 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
     return true;
   }
 
-  /**
-   * refreshes page
-   * gets called by button
-   */
+  ///refreshes page
+   ///gets called by button
   void refresh(){
     setState(() {
       
@@ -225,10 +219,8 @@ class _ImgScreenWinState extends State<ImgScreenWin> {
     });
   }
 
-  /**
-   * provides local path to image
-   * gets called by FutureBuilder
-   */
+  ///provides local path to image
+  ///gets called by FutureBuilder
   Future<String> getImg() async {
     await setImagePath();
 

@@ -28,6 +28,8 @@ class _ImgScreenState extends State<ImgScreen> {
   late GoogleSignInAccount _account;
 
 
+  ///loads image and account information
+  ///instantly uploads if image was just taken
   @override
   void initState(){
     super.initState();
@@ -61,9 +63,11 @@ class _ImgScreenState extends State<ImgScreen> {
     await _compress();
     await _save();
 
+    ///authenticating to drive API
     final authHeaders = await _account.authHeaders;
     final authenticateClient = GoogleAuthClient(authHeaders);
     final driveApi = drive.DriveApi(authenticateClient);
+
     late String folderId;
 
 
@@ -87,7 +91,7 @@ class _ImgScreenState extends State<ImgScreen> {
         });
       });
     }
-    ///creates App folder
+    ///creates App folder if not found
     catch (e) {
 
       await driveApi.files.create(
@@ -105,10 +109,7 @@ class _ImgScreenState extends State<ImgScreen> {
     var driveFile = new drive.File();
 
     ///names upload file and specifies parent folder
-
     final dateTime = DateTime.now().toString();
-
-    ///formats dateTime to make it suitable for saving
     final lastIndex = dateTime.indexOf('.');
     final essentials = dateTime.substring(0, lastIndex).replaceAll(':', '-');
 
@@ -141,6 +142,8 @@ class _ImgScreenState extends State<ImgScreen> {
       appBar: AppBar(
         title: Text('Dein Bild'),
       ),
+      ///shows upload message if instantSend
+      ///else shows chosen image for confirmation
       body: widget.instantSend ?
       Center(
         child: Column(
