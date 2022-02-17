@@ -15,8 +15,9 @@ import 'google_auth_client.dart';
 
 class ImgScreen extends StatefulWidget {
   final List args;
+  final bool instantSend;
 
-  ImgScreen({required this.args});
+  ImgScreen({required this.args, required this.instantSend});
 
   @override
   State<StatefulWidget> createState() => _ImgScreenState();
@@ -31,14 +32,15 @@ class _ImgScreenState extends State<ImgScreen> {
   void initState(){
     super.initState();
 
+    _image = widget.args[0];
     _account = widget.args[1];
 
-    _upload();
+    if (widget.instantSend) {
+      _upload();
+    }
   }
   
   Future<void> _compress() async {
-    _image = widget.args[0];
-
     ///builds output path for image compressor
     final lastIndex = _image.path.lastIndexOf(new RegExp(r'.jp'));
     final splitted = _image.path.substring(0, lastIndex);
@@ -103,7 +105,14 @@ class _ImgScreenState extends State<ImgScreen> {
     var driveFile = new drive.File();
 
     ///names upload file and specifies parent folder
-    driveFile.name = DateTime.now().toString();
+
+    final dateTime = DateTime.now().toString();
+
+    ///formats dateTime to make it suitable for saving
+    final lastIndex = dateTime.indexOf('.');
+    final essentials = dateTime.substring(0, lastIndex).replaceAll(':', '-');
+
+    driveFile.name = essentials;
     driveFile.parents = [folderId ];
 
     ///uploads file
@@ -132,7 +141,8 @@ class _ImgScreenState extends State<ImgScreen> {
       appBar: AppBar(
         title: Text('Dein Bild'),
       ),
-      body: Center(
+      body: widget.instantSend ?
+      Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -144,6 +154,31 @@ class _ImgScreenState extends State<ImgScreen> {
           ),
         ])
       )
+      : SizedBox(
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        child: Image.file(File(_image.path)),
+      ),
+
+      floatingActionButton: getActionButton(),
     );
+  }
+
+  Widget getActionButton() {
+    if (widget.instantSend){
+      return Container();
+    } else {
+      return FloatingActionButton(
+        onPressed: _upload,
+        tooltip: 'Letztes Bild anzeigen',
+        child: const Icon(Icons.upload),
+      );
+    }
   }
 }

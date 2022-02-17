@@ -198,8 +198,8 @@ class _AndMainState extends State<AndMain> {
                  ImgScreen(
                     args: [
                       File(_imgPath!),
-                      _account
-                    ],
+                      _account,
+                    ], instantSend: true,
                   )
           )
       );
@@ -221,7 +221,7 @@ class _AndMainState extends State<AndMain> {
                         args: [
                           File(_imgPath!),
                           _account
-                        ],
+                        ], instantSend: false,
                       )
               )
           );

@@ -74,6 +74,7 @@ class GoogleDrive {
   Future<String> receive() async {
     var client = await getHttpClient();
     var driveApi = drive.DriveApi(client);
+    late String fileName;
 
     String lastEntryDriveId = '';
 
@@ -103,6 +104,7 @@ class GoogleDrive {
             else {
 
               lastEntryDriveId = file.files!.first.id!;
+              fileName = file.files!.first.name!;
 
             }
           });
@@ -124,18 +126,12 @@ class GoogleDrive {
 
       final dir = await getDownloadsDirectory();
 
-      final dateTime = DateTime.now().toString();
-
-      ///formats dateTime to make it suitable for saving
-      final lastIndex = dateTime.indexOf('.');
-      final essentials = dateTime.substring(0, lastIndex).replaceAll(':', '-');
-
       //var faker = Faker();
 
       //final essentials = faker.person;
 
       ///sets saving path
-      _imgPath = dir!.path + "\\$essentials.jpg";
+      _imgPath = dir!.path + "\\$fileName.jpg";
 
       ///downloads image
       drive.Media img = (await driveApi.files.get(lastEntryDriveId, downloadOptions: drive.DownloadOptions.fullMedia)) as drive.Media;
@@ -162,7 +158,7 @@ class GoogleDrive {
       await driveApi.files.delete(lastEntryDriveId);
     }
 
-    await Future.delayed(Duration(milliseconds: 1000));
+    await Future.delayed(Duration(seconds: 2));
 
     return _imgPath;
   }
